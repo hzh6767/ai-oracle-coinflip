@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 命运硬币</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div class="eyebrow">ORACLE 01 · AI 趣味实验</div>
+      <h1>AI 命运硬币</h1>
+      <p>把纠结交给一枚会吐槽的硬币。它不保证正确，但保证有点道理。</p>
+    </header>
+
+    <section class="panel" aria-labelledby="question-label">
+      <label id="question-label" for="question">把你的问题交给命运</label>
+      <textarea id="question" rows="3" maxlength="140" placeholder="例如：今晚要不要点第二份薯条？"></textarea>
+      <div class="controls">
+        <label for="tone">回答气质
+          <select id="tone">
+            <option value="absurd">荒谬但自信</option>
+            <option value="kind">温柔鼓励</option>
+            <option value="serious">一本正经</option>
+          </select>
+        </label>
+        <button id="flip" class="primary" type="button"><span aria-hidden="true">✦</span> 抛出命运</button>
+      </div>
+    </section>
+
+    <section class="oracle-layout" aria-live="polite">
+      <div class="coin-stage panel">
+        <div id="coin" class="coin" role="img" aria-label="尚未抛掷的硬币">?</div>
+        <div id="result" class="result">准备好听听宇宙的随口一说了吗？</div>
+        <div id="subresult" class="subresult">输入问题后点击按钮，命运会认真地乱讲。</div>
+      </div>
+      <aside class="panel history-panel">
+        <div class="section-heading"><h2>近期判词</h2><button id="clearHistory" class="quiet" type="button">清空</button></div>
+        <ol id="history" class="history"><li class="empty">还没有判词，先抛一次吧。</li></ol>
+      </aside>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

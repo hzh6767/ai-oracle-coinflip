@@ -1,0 +1,5 @@
+{
+  "name": "ai-oracle-coinflip",
+  "private": true,
+  "scripts": {"check": "node --check app.js"}
+}
