@@ -67,3 +67,12 @@ test('pushHistory 不修改传入的数组', () => {
 test('pushHistory 支持自定义上限', () => {
   assert.deepStrictEqual(pushHistory(['b', 'c'], 'a', 2), ['a', 'b']);
 });
+
+test('app.js 复用 VERDICT_CAP，而非硬编码历史上限', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const src = fs.readFileSync(path.join(__dirname, '..', 'app.js'), 'utf8');
+  // 上限必须来自 oracle.js 的单一事实来源
+  assert.match(src, /VERDICT_CAP/, 'app.js 应引用 VERDICT_CAP');
+  assert.doesNotMatch(src, /children\.length\s*>\s*5\b/, 'app.js 不应硬编码历史上限 5');
+});

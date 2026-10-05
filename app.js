@@ -12,7 +12,7 @@ if (!question || !tone || !coin || !result || !subresult || !history || !flipBtn
   console.error('Error: Required elements missing in DOM. Check element ids in index.html');
 }
 
-const { verdicts, pick, truncatePrompt } = typeof module !== 'undefined' && module.exports
+const { verdicts, pick, truncatePrompt, VERDICT_CAP } = typeof module !== 'undefined' && module.exports
   ? require('./oracle.js')
   : window;
 function addHistory(text) {
@@ -22,7 +22,7 @@ function addHistory(text) {
   const item = document.createElement('li');
   item.textContent = text;
   history.prepend(item);
-  while (history.children.length > 5) history.lastElementChild.remove();
+  while (history.children.length > VERDICT_CAP) history.lastElementChild.remove();
 }
 
 if (flipBtn) {
