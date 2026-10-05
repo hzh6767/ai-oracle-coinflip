@@ -1,5 +1,15 @@
 {
   "name": "ai-oracle-coinflip",
+  "version": "0.1.0",
+  "description": "A dependency-free browser toy: ask a question, pick a tone, and get a random yes/no fortune with AI flavor.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hzh6767/ai-oracle-coinflip"
+  },
   "private": true,
-  "scripts": {"check": "node --check app.js"}
+  "scripts": {
+    "check": "node --check app.js && node --check oracle.js",
+    "test": "node --test tests/oracle.test.js"
+  }
 }

@@ -29,10 +29,10 @@
       </div>
     </section>
 
-    <section class="oracle-layout" aria-live="polite">
+    <section class="oracle-layout">
       <div class="coin-stage panel">
         <div id="coin" class="coin" role="img" aria-label="尚未抛掷的硬币">?</div>
-        <div id="result" class="result">准备好听听宇宙的随口一说了吗？</div>
+        <div id="result" class="result" aria-live="polite" aria-atomic="true">准备好听听宇宙的随口一说了吗？</div>
         <div id="subresult" class="subresult">输入问题后点击按钮，命运会认真地乱讲。</div>
       </div>
       <aside class="panel history-panel">
@@ -41,6 +41,7 @@
       </aside>
     </section>
   </main>
+  <script src="oracle.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
