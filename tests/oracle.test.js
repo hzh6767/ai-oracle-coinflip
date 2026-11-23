@@ -76,3 +76,34 @@ test('app.js 复用 VERDICT_CAP，而非硬编码历史上限', () => {
   assert.match(src, /VERDICT_CAP/, 'app.js 应引用 VERDICT_CAP');
   assert.doesNotMatch(src, /children\.length\s*>\s*5\b/, 'app.js 不应硬编码历史上限 5');
 });
+
+test('按页面顺序加载经典脚本后可以抛出硬币', () => {
+  const { readFileSync } = require('node:fs');
+  const { join } = require('node:path');
+  const vm = require('node:vm');
+  const root = join(__dirname, '..');
+  const nodes = new Map();
+  function node(selector) {
+    if (!nodes.has(selector)) nodes.set(selector, {
+      addEventListener(event, handler) { this[event] = handler; },
+      classList: { add() {}, remove() {} },
+      setAttribute() {},
+      querySelector() { return null; },
+      children: [],
+      prepend(item) { this.children.unshift(item); }
+    });
+    return nodes.get(selector);
+  }
+  const context = vm.createContext({ document: { querySelector: node, createElement: () => ({}) } });
+  vm.runInContext('window = globalThis', context);
+  const html = readFileSync(join(root, 'index.html'), 'utf8');
+  for (const [, src] of html.matchAll(/<script src="([^"]+)"><\/script>/g)) {
+    vm.runInContext(readFileSync(join(root, src), 'utf8'), context, { filename: src });
+  }
+  node('#tone').value = 'kind';
+  node('#question').value = '测试问题';
+  node('#flip').click();
+  assert.match(node('#coin').textContent, /^(YES|NO)$/);
+  assert.ok(node('#result').textContent);
+  assert.match(node('#history').children[0].textContent, /测试问题/);
+});
