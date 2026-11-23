@@ -12,7 +12,7 @@ if (!question || !tone || !coin || !result || !subresult || !history || !flipBtn
   console.error('Error: Required elements missing in DOM. Check element ids in index.html');
 }
 
-const { verdicts, pick, truncatePrompt, VERDICT_CAP } = typeof module !== 'undefined' && module.exports
+const oracleCore = typeof module !== 'undefined' && module.exports
   ? require('./oracle.js')
   : window;
 function addHistory(text) {
@@ -22,7 +22,7 @@ function addHistory(text) {
   const item = document.createElement('li');
   item.textContent = text;
   history.prepend(item);
-  while (history.children.length > VERDICT_CAP) history.lastElementChild.remove();
+  while (history.children.length > oracleCore.VERDICT_CAP) history.lastElementChild.remove();
 }
 
 if (flipBtn) {
@@ -38,10 +38,10 @@ if (flipBtn) {
       coin.setAttribute('aria-label', `硬币结果：${face}`);
     }
     if (result) {
-      result.textContent = pick(verdicts[tone?.value || 'kind'][side]);
+      result.textContent = oracleCore.pick(oracleCore.verdicts[tone?.value || 'kind'][side]);
     }
     if (subresult) {
-      subresult.textContent = `关于“${truncatePrompt(prompt)}”的判词`;
+      subresult.textContent = `关于“${oracleCore.truncatePrompt(prompt)}”的判词`;
     }
     addHistory(`${face === 'YES' ? '是' : '否'} · ${prompt}`);
   });
